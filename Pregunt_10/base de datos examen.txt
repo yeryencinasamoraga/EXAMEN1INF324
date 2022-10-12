@@ -1,0 +1,61 @@
+CREATE TABLE PERSONA(
+	ci integer primary key,
+    nombre_completo varchar (100),
+    fecha_nac date,
+    departamento varchar(2)
+);
+CREATE TABLE ACCESO(
+	ci integer,
+    usuario varchar(50),
+    contraseña varchar(50),
+    rol varchar(50),
+    FOREIGN key (ci) REFERENCES persona (ci)
+);
+CREATE TABLE INSCRIPCION(
+	ci_estudiante integer,
+    sigla varchar(50),
+    nota1 integer,
+    nota2 integer,
+    nota3 integer,
+    nota_final integer,
+    FOREIGN key (ci_estudiante) REFERENCES persona (ci)
+);
+
+insert into persona values(9070934,'yery encinas','1998/01/28','02');
+insert into persona values(111,'nicol yujra','1997/09/21','01');
+insert into persona values(222,'roxana gomez','1999/01/28','02');
+insert into persona values(333,'sergio cruz','1998/01/28','04');
+insert into persona values(444,'melina torrico','1998/01/28','02');
+
+insert into acceso values(9070934,'yeryco','12345678','director');
+insert into acceso values(111,'nic','12345678','estudiante');
+insert into acceso values(222,'roxy','12345678','estudiante');
+insert into acceso values(333,'sc','12345678','estudiante');
+insert into acceso values(444,'mel','12345678','estudiante');
+
+insert into INSCRIPCION values(111,'INF - 111',10,20,13,12);
+insert into INSCRIPCION values(444,'INF - 112',16,25,16,18);
+insert into INSCRIPCION values(444,'INF - 113',12,20,15,12);
+insert into INSCRIPCION values(444,'INF - 121',5,20,13,12);
+
+
+create procedure consultar
+@ci int,
+@nombre_completo varchar(50),
+@fecha_nac varchar(50),
+@departamento varchar(2)
+as
+begin
+insert into persona values(@ci,@nombre_completo,@fecha_nac,@departamento)
+end
+
+create procedure editar
+@ci int,
+@nombre_completo varchar(50),
+@fecha_nac varchar(50),
+@departamento varchar(2)
+as
+begin
+update persona set nombre_completo=@nombre_completo,fecha_nac=@fecha_nac,departamento=@departamento
+where ci=@ci
+end
